@@ -76,12 +76,12 @@ I adapted the KMeans algorithm to a graph based approach in the following way: <
 <figure>
   <figcaption>50 Random Locations with Relations:</figcaption> <br> <br>
   <img src="./screenshots/locations_random_50.PNG" style="width:60%">
-</figure> <hr>
+</figure> <br>
 
 <h3>Final Output Visualization:</h3>
 <figure>
-  <img src="./screenshots/final_viz.PNG" style="width:80%">
-</figure> <hr>
+  <img src="./screenshots/final_viz.PNG">
+</figure> <br>
 
 
 <h3>Code and Output Files:</h3>
