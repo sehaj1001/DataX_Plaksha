@@ -87,7 +87,12 @@ I adapted the KMeans algorithm to a graph based approach in the following way: <
   <img src="./screenshots/final_viz.png" style="width:50%">
 </figure> <br>
 
-For the purposes of comparison, I also visualised the output for varying values of <i>k</i> keeping all other methods and parameters constant. These can be seen in the ipynb uploaded. <br> <br>
+<h3>Other Values of <i>k</i>:</h3>
+
+For the purposes of comparison, I also visualised the output for varying values of <i>k</i> keeping all other methods and parameters constant.
+<figure>
+  <img src="./screenshots/vary_k.png" style="width:90%">
+</figure> <br>
 
 
 <h3>Code and Files:</h3>
@@ -96,7 +101,8 @@ For the purposes of comparison, I also visualised the output for varying values 
 2.   All Cypher code has been uploaded as a text file named 'cypher_code.txt'. <br>
 3.   Python code for EDA, Elbow Method and to generate output visualizations has been uploaded in the notebook 'DataX2_Assignment1_SehajpreetKaur.ipynb'. <br>
 4.   The output CSV file for <i>k</i>=7 'output.csv' generated at the end of clustering in Neo4j has been uploaded and consists of four columns -- latitude, longitude, cluster_number and centroid. <br>
-5.   All images have been uploaded into the screenshots folder. <br> <br>
+5.   All images have been uploaded into the screenshots folder. 
+6.   The output files for all other values of <i>k</i> have been uploaded into the varying_k folder.<br> <br>
 
 <h3>References:</h3>
 
