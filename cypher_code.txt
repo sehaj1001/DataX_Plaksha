@@ -1,0 +1,99 @@
+Cypher Code:
+
+
+// Load the data and create a node for each location (round off to 2 decimal places)
+LOAD CSV WITH HEADERS FROM 'file:///lat_long.csv' AS row
+WITH row, 
+apoc.math.round(toFloat(row.latitude), 2) AS x, apoc.math.round(toFloat(row.longitude), 2) AS y
+CREATE (l:Location {coordinates:point({x:x, y:y}), cluster_num:0, centroid:0})
+RETURN count(l) AS num_of_locations
+
+
+// Find and delete duplicate nodes after rounding off
+MATCH (l:Location) 
+WITH l.coordinates AS coordinates, collect(l) AS duplicate_nodes 
+WHERE size(duplicate_nodes) > 1
+FOREACH (l IN tail(duplicate_nodes) | DELETE l)
+
+
+// Pick 7 random locations
+MATCH (l:Location)
+WITH l, rand() AS randNum
+ORDER BY randNum
+LIMIT 7
+// Assign them as the initial centroids
+WITH collect(l) AS centroids
+UNWIND range(0, 6) AS i
+CREATE (c:Centroid {coordinates:centroids[i].coordinates, num:i+1, times_updated:0})
+RETURN c AS initial_centroids
+
+
+// Assign each item to the cluster with the nearest centroid by creating a relation
+MATCH (l:Location), (c:Centroid)
+WITH l, c ORDER BY point.distance(l.coordinates, c.coordinates)
+WITH l, collect(c) AS centroids
+WITH l, centroids[0] AS new_c
+CREATE (l)-[REL:CLOSEST_TO]->(new_c)
+SET l.cluster_num = new_c.num
+RETURN l.coordinates AS location, l.cluster_num AS assigned_cluster LIMIT 10
+
+
+// Recalculate the centroids to be the mean of the cluster
+MATCH (c:Centroid)
+WITH c
+MATCH p = (c)<-[REL:CLOSEST_TO]-()
+WITH c, avg(last(nodes(p)).coordinates.x) AS mean_x, avg(last(nodes(p)).coordinates.y) AS mean_y
+SET c.coordinates = point({x:mean_x, y:mean_y}), c.times_updated = c.times_updated + 1
+RETURN c AS new_centroids
+
+
+// Run the loop for kmeans which terminates when there are no changes in the clusters or max iterations are reached
+CALL apoc.periodic.commit(
+// Assign each item to the cluster with the nearest centroid
+"MATCH (l:Location), (c:Centroid)
+WITH l, c ORDER BY point.distance(l.coordinates, c.coordinates)
+WITH l, collect(c) AS centroids
+WITH l, centroids[0] AS new_c
+WHERE NOT EXISTS((l)-->(new_c))
+MATCH p = (l)-[REL:CLOSEST_TO]->()
+CALL apoc.refactor.to(REL, new_c)
+YIELD output
+SET l.cluster_num = new_c.num
+// Count number of points whose clusters changed
+WITH COUNT(*) AS num_changes
+MATCH (c:Centroid)
+WITH num_changes, c
+MATCH p = (c)<-[REL:CLOSEST_TO]-()
+WITH num_changes, c, avg(last(nodes(p)).coordinates.x) AS mean_x, avg(last(nodes(p)).coordinates.y) AS mean_y
+SET c.coordinates = point({x:mean_x, y:mean_y}), c.times_updated = c.times_updated + 1
+RETURN CASE WHEN c.times_updated < 30 THEN num_changes ELSE 0 END LIMIT 1", {})
+
+
+// Assign the locations closest to the centroids as the actual centroids and set their column value to 1
+MATCH (c:Centroid)
+WITH c
+MATCH p = (c)<-[REL:CLOSEST_TO]-()
+WITH c, p ORDER BY point.distance(c.coordinates, last(nodes(p)).coordinates)
+WITH c, collect(p) AS closest_l
+WITH last(nodes(closest_l[0])) AS point_is_cluster
+MATCH (l:Location)
+WHERE l.coordinates = point_is_cluster.coordinates
+SET l.centroid = 1
+RETURN l AS final_centroids ORDER BY l.cluster_num 
+
+
+// Calculate the size of each cluster
+MATCH (c:Centroid)
+RETURN c.num AS cluster_num, size((c)<--()) AS num_of_nodes
+
+
+// Export to CSV
+WITH 
+"MATCH (l:Location)
+RETURN l.coordinates.x AS latitude,
+l.coordinates.y AS longitude,
+l.cluster_num AS cluster_number,
+l.centroid AS centroid" AS query
+CALL apoc.export.csv.query(query, "output.csv", {})
+YIELD file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
+RETURN file, source, format, nodes, relationships, properties, time, rows, batchSize, batches, done, data
