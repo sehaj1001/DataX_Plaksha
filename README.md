@@ -89,7 +89,7 @@ I adapted the KMeans algorithm to a graph based approach in the following way: <
 
 <h3>Other Values of <i>k</i>:</h3>
 
-For the purposes of comparison, I also visualised the output for varying values of <i>k</i> keeping all other methods and parameters constant. In our case, since the number of points is quite large and they are evenly distributed across all values of latitudes and longitudes (no immediately evident clusters), it is difficult to conclude if one value of <i>k</i> is better than the other. We notice that this graph-based clustering method creates even clusters across values of <i>k</i> given such a dataset. 
+For the purposes of comparison, I also visualised the output for varying values of <i>k</i> keeping all other methods and parameters constant. In our case, since the number of points is quite large and they are evenly distributed across all values of latitudes and longitudes (no immediately evident clusters), it is difficult to conclude if one value of <i>k</i> is better than the other. We notice that this graph-based clustering method creates relatively uniform clusters across values of <i>k</i> given such a dataset. 
 <figure>
   <img src="./screenshots/vary_k.png" style="width:90%">
 </figure> <br>
