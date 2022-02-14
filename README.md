@@ -6,7 +6,11 @@ The given dataset consists of 2,50,000 rows of geospatial data (latitudes and lo
 
 <h3>Algorithm Used:</h3> 
 
-In order to cluster the data, I have used the <b>KMeans Clustering</b> algorithm. <b>Elbow Method</b> has been used to determine the optimal value of <i>k</i> or the number of clusters. It works by calculates the WCSS (sum of sqaured distances between each point and centroid in a cluster) and returns the value of <i>k</i> at which an 'elbow' is observed in the graph and it starts to become parallel to the X-axis. Using this method, the optimal value of <b><i>k</i> = 7</b>. <br> <br>
+In order to cluster the data, I have used the <b>KMeans Clustering</b> algorithm. <b>Elbow Method</b> has been used to determine the optimal value of <i>k</i> or the number of clusters. It works by calculates the WCSS (sum of sqaured distances between each point and centroid in a cluster) and returns the value of <i>k</i> at which an 'elbow' is observed in the graph and it starts to become parallel to the X-axis. Using this method, the optimal value of <b><i>k</i> = 7</b>. <br>
+
+<figure>
+  <img src="./screenshots/elbow_method.png" style="width:50%">
+</figure> <br>
 
 <h3>Approach Used:</h3>
 
@@ -88,10 +92,10 @@ For the purposes of comparison, I also visualised the output for varying values 
 
 <h3>Code and Files:</h3>
 
-1.   The input CSV file has been uploaded and consists of two columns -- latitude and longitude. <br>
-2.   All Cypher code has been uploaded as a text file. <br>
-3.   Python code for EDA, Elbow Method and to generate output visualizations has been uploaded as an ipynb. <br>
-4.   The output CSV file generated at the end of clustering in Neo4j has been uploaded and consists of four columns -- latitude, longitude, cluster_number and centroid. <br>
+1.   The input CSV file 'lat_long.csv' has been uploaded and consists of two columns -- latitude and longitude. <br>
+2.   All Cypher code has been uploaded as a text file named 'cypher_code.txt'. <br>
+3.   Python code for EDA, Elbow Method and to generate output visualizations has been uploaded in the notebook 'DataX2_Assignment1_SehajpreetKaur.ipynb'. <br>
+4.   The output CSV file for <i>k</i>=7 'output.csv' generated at the end of clustering in Neo4j has been uploaded and consists of four columns -- latitude, longitude, cluster_number and centroid. <br>
 5.   All images have been uploaded into the screenshots folder. <br> <br>
 
 <h3>References:</h3>
