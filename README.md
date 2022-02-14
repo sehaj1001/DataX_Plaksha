@@ -70,24 +70,30 @@ I adapted the KMeans algorithm to a graph based approach in the following way: <
 
 <figure>
   <figcaption>Single Cluster:</figcaption> <br> <br>
-  <img src="./screenshots/centroid_locations.PNG" style="width:60%">
+  <img src="./screenshots/centroid_locations.PNG" style="width:50%">
 </figure>
 
 <figure>
   <figcaption>50 Random Locations with Relations:</figcaption> <br> <br>
-  <img src="./screenshots/locations_random_50.PNG" style="width:60%">
+  <img src="./screenshots/locations_random_50.PNG" style="width:40%">
 </figure> <br>
 
 <h3>Final Output Visualization:</h3>
 <figure>
-  <img src="./screenshots/final_viz.PNG">
+  <img src="./screenshots/final_viz.png" style="width:50%">
 </figure> <br>
 
+For the purposes of comparison, I also visualised the output for varying values of <i>k</i> keeping all other methods and parameters constant. These can be seen in the ipynb uploaded. <br> <br>
 
-<h3>Code and Output Files:</h3>
-1. Cypher code
-2. ipynb
-3. csv
-4. screenshots
+
+<h3>Code and Files:</h3>
+
+1.   The input CSV file has been uploaded and consists of two columns -- latitude and longitude. <br>
+2.   All Cypher code has been uploaded as a text file. <br>
+3.   Python code for EDA, Elbow Method and to generate output visualizations has been uploaded as an ipynb. <br>
+4.   The output CSV file generated at the end of clustering in Neo4j has been uploaded and consists of four columns -- latitude, longitude, cluster_number and centroid. <br>
+5.   All images have been uploaded into the screenshots folder. <br> <br>
 
 <h3>References:</h3>
+
+1.   https://medium.com/neo4j/k-means-clustering-with-neo4j-b0ec54bf0103
