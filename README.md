@@ -25,8 +25,9 @@ I have implemented KMeans using <b>Neo4j and Cypher</b> using a graph-based appr
 Each 'Location' node has a directed edge or outgoing relationship <b>'CLOSEST_TO'</b> with the 'Centroid' of the cluster that it belongs to. At any point in time, a 'Location' node must have <b>exactly one</b> outgoing relationship to any one 'Centroid'.<br> <br>
 
 <h3>Database Schema:</h3> <br>
-<img src="./neo4j_screenshots/db_schema.PNG" width="350" title="Database Schema" alt="Database Schema"> <br>
-
+<figure>
+  <img src="./screenshots/db_schema.PNG" style="width:50%">
+</figure> <br>
 
 <h3>Clustering:</h3>
 
@@ -40,4 +41,53 @@ I adapted the KMeans algorithm to a graph based approach in the following way: <
 6.   Run the loop for KMeans by repeating Steps 4-5 until there are no changes in the clusters or a max number of iterations is reached. Instead of creating a relationship as in Step 4, within the loop we change the relationship to end at the new cluster center to maintain the constraint of exactly one outgoing relationship with any 'Centroid' at a time. 
 7.   Assign the final centroids to be <i>k</i> actual locations from the dataset by finding the closest 'Location' point to each 'Centroid'. Set centroid to 1 for each such chosen 'Location'. <br> <br>
 
-<h3>Output Visualization:</h3>
+<h3>Neo4j Screenshots:</h3>
+
+<figure>
+  <figcaption>Initial Centroids:</figcaption> <br> <br>
+  <img src="./screenshots/initial_centroids.PNG" style="width:70%">
+</figure>
+
+<figure>
+  <figcaption>Assigned Clusters:</figcaption> <br> <br>
+  <img src="./screenshots/assigned_clusters.PNG" style="width:40%">
+</figure>
+
+<figure>
+  <figcaption>New Centroids:</figcaption> <br> <br>
+  <img src="./screenshots/new_centroids.PNG" style="width:80%">
+</figure>
+
+<figure>
+  <figcaption>Final Centroids:</figcaption> <br> <br>
+  <img src="./screenshots/final_centroids.PNG" style="width:70%">
+</figure>
+
+<figure>
+  <figcaption>Cluster Sizes:</figcaption> <br> <br>
+  <img src="./screenshots/num_of_nodes.PNG" style="width:40%">
+</figure>
+
+<figure>
+  <figcaption>Single Cluster:</figcaption> <br> <br>
+  <img src="./screenshots/centroid_locations.PNG" style="width:60%">
+</figure>
+
+<figure>
+  <figcaption>50 Random Locations with Relations:</figcaption> <br> <br>
+  <img src="./screenshots/locations_random_50.PNG" style="width:60%">
+</figure> <hr>
+
+<h3>Final Output Visualization:</h3>
+<figure>
+  <img src="./screenshots/final_viz.PNG" style="width:80%">
+</figure> <hr>
+
+
+<h3>Code and Output Files:</h3>
+1. Cypher code
+2. ipynb
+3. csv
+4. screenshots
+
+<h3>References:</h3>
