@@ -42,7 +42,7 @@ I adapted the KMeans algorithm to a graph based approach in the following way: <
 3.   Create <i>k</i> 'Centroid' nodes with coordinate values assigned randomly by picking the coordinates of any <i>k</i> unique 'Location' nodes. Assign each 'Centroid' a num between 1 and <i>k</i> and set times_updated to 0. 
 4.   Assign each 'Location' to its nearest cluster by calculating the geodesic distance between the point and each 'Centroid'. Create an outgoing 'CLOSEST_TO' relation between the point and the closest cluster center.
 5.   Recalculate the coordinates of the 'Centroid' nodes to be the mean latitude and longitude of all 'Location' nodes within that cluster and increment times_updated by 1. 
-6.   Run the loop for KMeans by repeating Steps 4-5 until there are no changes in the clusters or a max number of iterations is reached. Instead of creating a relationship as in Step 4, within the loop we change the relationship to end at the new cluster center to maintain the constraint of exactly one outgoing relationship with any 'Centroid' at a time. 
+6.   Run the loop for KMeans by repeating Steps 4-5 until there are no changes in the clusters or a max number of iterations (here, 30) is reached. Instead of creating a relationship as in Step 4, within the loop we change the relationship to end at the new cluster center to maintain the constraint of exactly one outgoing relationship with any 'Centroid' at a time. 
 7.   Assign the final centroids to be <i>k</i> actual locations from the dataset by finding the closest 'Location' point to each 'Centroid'. Set centroid to 1 for each such chosen 'Location'. <br> <br>
 
 <h3>Neo4j Screenshots:</h3>
@@ -89,7 +89,7 @@ I adapted the KMeans algorithm to a graph based approach in the following way: <
 
 <h3>Other Values of <i>k</i>:</h3>
 
-For the purposes of comparison, I also visualised the output for varying values of <i>k</i> keeping all other methods and parameters constant.
+For the purposes of comparison, I also visualised the output for varying values of <i>k</i> keeping all other methods and parameters constant. In our case, since the number of points is quite large and they are evenly distributed across all values of latitudes and longitudes (no immediately evident clusters), it is difficult to conclude if one value of <i>k</i> is better than the other. We notice that this graph-based clustering method creates even clusters across values of <i>k</i> given such a dataset. 
 <figure>
   <img src="./screenshots/vary_k.png" style="width:90%">
 </figure> <br>
@@ -99,7 +99,7 @@ For the purposes of comparison, I also visualised the output for varying values 
 
 1.   The input CSV file 'lat_long.csv' has been uploaded and consists of two columns -- latitude and longitude. <br>
 2.   All Cypher code has been uploaded as a text file named 'cypher_code.txt'. <br>
-3.   Python code for EDA, Elbow Method and to generate output visualizations has been uploaded in the notebook 'DataX2_Assignment1_SehajpreetKaur.ipynb'. <br>
+3.   Python code for EDA, Elbow Method and to generate output visualizations has been uploaded in the notebook 'datax_clustering.ipynb'. <br>
 4.   The output CSV file for <i>k</i>=7 'output.csv' generated at the end of clustering in Neo4j has been uploaded and consists of four columns -- latitude, longitude, cluster_number and centroid. <br>
 5.   All images have been uploaded into the screenshots folder. 
 6.   The output files for all other values of <i>k</i> have been uploaded into the varying_k folder.<br> <br>
